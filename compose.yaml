@@ -1,0 +1,41 @@
+services:
+  gateway-svc:
+    build:
+      context: .
+      dockerfile: internal/svc/gateway/Dockerfile
+      args:
+        BUILDKIT_INLINE_CACHE: "1"
+      cache_from:
+        - type=local,src=.docker-cache/gateway
+      cache_to:
+        - type=local,dest=.docker-cache/gateway,mode=min
+    volumes:
+      - ./internal/svc/gateway/cfg.yaml:/app/cfg.yaml:ro
+    depends_on:
+      - storage-svc
+  auth-svc:
+    build:
+      context: .
+      dockerfile: internal/svc/auth/Dockerfile
+      args:
+        BUILDKIT_INLINE_CACHE: "1"
+      cache_from:
+        - type=local,src=.docker-cache/auth
+      cache_to:
+        - type=local,dest=.docker-cache/auth,mode=min
+    volumes:
+      - ./internal/svc/auth/cfg.yaml:/app/cfg.yaml:ro
+    depends_on:
+      - storage-svc
+  storage-svc:
+    build:
+      context: .
+      dockerfile: internal/svc/storage/Dockerfile
+      args:
+        BUILDKIT_INLINE_CACHE: "1"
+      cache_from:
+        - type=local,src=.docker-cache/storage
+      cache_to:
+        - type=local,dest=.docker-cache/storage,mode=min
+    volumes:
+      - ./internal/svc/storage/cfg.yaml:/app/cfg.yaml:ro

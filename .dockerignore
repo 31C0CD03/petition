@@ -1,0 +1,5 @@
+.docker-cache
+.git
+.gitignore
+**/.git
+**/.DS_Store

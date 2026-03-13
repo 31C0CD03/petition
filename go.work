@@ -1,0 +1,8 @@
+go 1.26.1
+
+use (
+	./internal/pkg
+	./internal/svc/auth
+	./internal/svc/gateway
+	./internal/svc/storage
+)
